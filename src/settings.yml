@@ -1,0 +1,40 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: https://{{ instance }}/api/v1/accounts/lookup?acct=@{{ username }}@{{ instance }}
+polling_headers: ''
+id: 89880
+custom_fields:
+- keyname: _doesnt_matter
+  name: About This Plugin
+  field_type: author_bio
+  description: Mastodon Profile plugin
+  github_url: https://github.com/rknightuk/trmnl-mastodon-profile
+  learn_more_url: https://rknight.me
+- keyname: instance
+  field_type: string
+  name: Instance
+  description: e.g. mastodon.social (no https://)
+- keyname: username
+  field_type: string
+  name: Username
+  description: e.g. gargron
+- keyname: show_toot_counts
+  field_type: select
+  options:
+  - true
+  - false
+  default: true
+  name: Show Toot Counts
+- keyname: toots_or_posts
+  field_type: select
+  options:
+  - Toots
+  - Posts
+  default: toots
+  name: Toots or Posts
+name: Mastodon
+refresh_interval: 120

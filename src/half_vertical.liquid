@@ -1,0 +1,22 @@
+<div class="layout layout--col gap--space-between">
+  {% render 'profile',
+    avatar_static: avatar_static, 
+    display_name: display_name,
+    username: username,
+    created_at: created_at,
+    trmnl: trmnl,
+  %}
+
+  <div class="w--full b-h-gray-5"></div>
+
+  {% render 'stats_grid', 
+    statuses_count: statuses_count, 
+    following_count: following_count, 
+    followers_count: followers_count, 
+    average_toots: average_toots,
+    toot_name: toot_name,
+    trmnl: trmnl,
+  %}
+</div>
+
+{% render 'title_bar', trmnl: trmnl, url: url %}

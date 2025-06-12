@@ -1,0 +1,103 @@
+{% assign created_date = created_at | date: '%s' %}
+{% assign now_date = 'now' | date: '%s' %}
+{% assign days_since = now_date | minus: created_date | divided_by: 86400 %}
+
+{% assign average_toots = statuses_count | divided_by: days_since %}
+
+{% assign toot_name = trmnl.plugin_settings.custom_fields_values.toots_or_posts | upcase %}
+
+<style>
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+  }
+</style>
+
+{% template profile %}
+{% assign day = created_at | date: "%e"| modulo: 10 %}
+{%- case day -%}
+    {%- when 1 -%}
+        {% assign suffix = 'st' %}
+    {%- when 2 -%}
+        {% assign suffix = 'nd' %}
+    {%- when 3 -%}
+        {% assign suffix = 'rd' %}
+    {%- else -%}
+        {% assign suffix = 'th' %}
+{%- endcase -%}
+
+<div class="grid">
+    <div class="item" style="flex-direction: column">
+      {% if hide_avatar != true %}
+      <span class="label text--center" style="width:100%;">
+        <img class="avatar" src="{{ avatar_static }}">
+      </span>
+      {% endif %}
+      <span class="label text--center" style="width:100%;">{{ display_name }}</span>
+      <span class="label text--center" style="width:100%;">@{{ username }}@{{ trmnl.plugin_settings.custom_fields_values.instance }}</span>
+      <span class="label text--center" style="width:100%;">Joined {{ created_at | date: '%B %e[S] %Y' | replace: '[S]',suffix }}</span>
+      {% if hide_avatar == true %}
+        <div class="w--full b-h-gray-5" style="margin-top: 10px;"></div>
+      {% endif %}
+    </div>
+  </div>
+{% endtemplate %}
+
+{% template stats_grid %}
+
+<div class="grid">
+    <div class="col col--span-3 gap--medium">
+      {% if trmnl.plugin_settings.custom_fields_values.show_toot_counts == 'true' %}
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value value--tnums">{{ statuses_count }}</span>
+          <span class="label">{{ toot_name }}</span>
+        </div>
+      </div>
+
+      <div class="w--full b-h-gray-5"></div>
+      {% endif %}
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value value--tnums">{{ followers_count }}</span>
+          <span class="label">FOLLOWERS</span>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col col--span-3 gap--medium">
+      {% if trmnl.plugin_settings.custom_fields_values.show_toot_counts == 'true' %}
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value value--tnums">{{ average_toots }}</span>
+          <span class="label">{{ toot_name }} PER DAY</span>
+        </div>
+      </div>
+
+      <div class="w--full b-h-gray-5"></div>
+      {% endif %}
+
+      <div class="item">
+        <div class="meta"></div>
+        <div class="content">
+          <span class="value value--tnums">{{ following_count }}</span>
+          <span class="label">FOLLOWING</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endtemplate %}
+
+{% template title_bar %}
+  <div class="title_bar">
+    <img class="image" src="https://cdn.rknight.me/trmnl/mastodon.svg">
+    <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+    <span class="instance">{{ url }}</span>
+  </div>
+{% endtemplate %}
