@@ -15,7 +15,7 @@
 </style>
 
 {% template profile %}
-{% assign day = created_at | date: "%e"| modulo: 10 %}
+{% assign day = created_at | date: "%e" %}
 {%- case day -%}
     {%- when 1 -%}
         {% assign suffix = 'st' %}
